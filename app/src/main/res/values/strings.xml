@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MemoApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="Edit_welcome">Write a new Task!</string>
+    <string name="Submit_button_text">Submit</string>
+    <string name="Pick_date">Pick the date</string>
+</resources>
