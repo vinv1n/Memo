@@ -72,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
     }
 
-    private void UpdateListview(String new_task) {
-        task_list.add(new_task);
-        adapter.notifyDataSetChanged();
+    private void UpdateListview(ArrayList<String> up_tasks) {
+        adapter = new ArrayAdapter(this, R.layout.activity_listview, up_tasks);
+        listView.setAdapter(adapter);
     }
 
     private void LaunchActivity() {
@@ -88,11 +88,9 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == 1337) {
             if (data.getStringArrayExtra("Updated_tasks") != null) {
-                Toast.makeText(this, "here", Toast.LENGTH_LONG).show();
                 String[] new_task = data.getStringArrayExtra("Updated_tasks");
-                List<String> up_tasks = new ArrayList<>(Arrays.asList(new_task));
-                Toast.makeText(getApplicationContext(), task_list.size(),
-                        Toast.LENGTH_LONG).show();
+                ArrayList<String> up_tasks = new ArrayList<String>(Arrays.asList(new_task));
+                UpdateListview(up_tasks);
             }
         }
     }

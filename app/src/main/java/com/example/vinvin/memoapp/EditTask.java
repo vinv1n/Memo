@@ -10,12 +10,15 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
+ *
  * Created by vinvin on 22.11.2017.
+ *
  */
 
 public class EditTask extends AppCompatActivity {
@@ -54,8 +57,11 @@ public class EditTask extends AppCompatActivity {
     }
     private void GetTaskData(){
 
-        final String[] task_list = getIntent().getStringArrayListExtra("Tasks")
-                .toArray(getIntent().getStringArrayExtra("Tasks"));
+        //final ArrayList<String> task_list = getIntent().
+        //        getStringArrayListExtra("Tasks");
+
+        final ArrayList<String> task_list = getIntent().
+                getStringArrayListExtra("Tasks");
 
         /*
 
@@ -74,10 +80,16 @@ public class EditTask extends AppCompatActivity {
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                String[] string_tasks = new String[task_list.size() + 1];
+                string_tasks = task_list.toArray(string_tasks);
+
                 String task = new_task.getText().toString();
-                String[] updated_tasks = ConvertArrays(task_list, task);
+
+                string_tasks[task_list.size()] = task;
+
                 Intent intent_task = new Intent();
-                intent_task.putExtra("Updated_tasks", updated_tasks);
+                intent_task.putExtra("Updated_tasks", string_tasks);
                 setResult(RESULT_OK, intent_task);
                 finish();
             }
@@ -111,19 +123,4 @@ public class EditTask extends AppCompatActivity {
         edit_date_activity.setVisibility(View.VISIBLE);
         date_view.setVisibility(View.GONE);
     }
-    public String[] ConvertArrays(String[] intent_tasks, String task){
-        try {
-            String[] updated_task = new String[intent_tasks.length + 1];
-            for (int i = 0; i <= intent_tasks.length; i++) {
-                updated_task[i] = intent_tasks[i];
-            }
-            updated_task[intent_tasks.length + 1] = task;
-            return updated_task;
-        } catch (NullPointerException e) {
-            String[] updated_task = new String[1];
-            updated_task[0] = task;
-            return updated_task;
-        }
-    }
-
 }

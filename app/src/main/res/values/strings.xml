@@ -4,4 +4,7 @@
     <string name="Edit_welcome">Write a new Task!</string>
     <string name="Submit_button_text">Submit</string>
     <string name="Pick_date">Pick the date</string>
+    <string name="Priority">Priority</string>
+    <string name="Description">Description</string>
+    <string name="Date">Date</string>
 </resources>
