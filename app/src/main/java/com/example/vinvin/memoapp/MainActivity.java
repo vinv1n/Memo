@@ -13,7 +13,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -75,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void LaunchActivity() {
-        Intent intent = new Intent(MainActivity.this.getApplicationContext(), EditTask.class);
+        Intent intent = new Intent(this, EditTask.class);
         intent.putExtra("Tasks", task_list);
         startActivityForResult(intent, 1337);
     }
@@ -84,9 +87,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == 1337) {
-            if (data != null) {
-                String [] new_task = data.getStringArrayExtra("Updated_tasks");
-                Toast.makeText(getApplicationContext(), new_task.length, Toast.LENGTH_LONG).show();
+            if (data.getStringArrayExtra("Updated_tasks") != null) {
+                Toast.makeText(this, "here", Toast.LENGTH_LONG).show();
+                String[] new_task = data.getStringArrayExtra("Updated_tasks");
+                List<String> up_tasks = new ArrayList<>(Arrays.asList(new_task));
+                Toast.makeText(getApplicationContext(), task_list.size(),
+                        Toast.LENGTH_LONG).show();
             }
         }
     }

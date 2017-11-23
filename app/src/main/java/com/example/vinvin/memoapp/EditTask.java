@@ -12,6 +12,7 @@ import android.widget.NumberPicker;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by vinvin on 22.11.2017.
@@ -35,7 +36,7 @@ public class EditTask extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
 
         date_view = (ConstraintLayout) findViewById(R.id.date);
-        edit_date_activity = (ConstraintLayout) findViewById(R.id.edit_tasks);
+        edit_date_activity = (ConstraintLayout) findViewById(R.id.edit_body);
 
         new_task = (EditText) findViewById(R.id.input_text);
         submit_button = (Button) findViewById(R.id.submit_button);
@@ -53,6 +54,9 @@ public class EditTask extends AppCompatActivity {
     }
     private void GetTaskData(){
 
+        final String[] task_list = getIntent().getStringArrayListExtra("Tasks")
+                .toArray(getIntent().getStringArrayExtra("Tasks"));
+
         /*
 
         At this point listview should be upgraded that it will show dates and priority levels
@@ -67,16 +71,14 @@ public class EditTask extends AppCompatActivity {
             }
         });
 
-        String task = new_task.getText().toString();
-        ArrayList<String> task_list = getIntent().getStringArrayListExtra("Tasks");
-        task_list.add(task);
-        final Intent intent = new Intent();
-        intent.putExtra("Updated_tasks", task_list);
-
         submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setResult(RESULT_OK, intent);
+                String task = new_task.getText().toString();
+                String[] updated_tasks = ConvertArrays(task_list, task);
+                Intent intent_task = new Intent();
+                intent_task.putExtra("Updated_tasks", updated_tasks);
+                setResult(RESULT_OK, intent_task);
                 finish();
             }
         });
@@ -92,7 +94,7 @@ public class EditTask extends AppCompatActivity {
     Not working yet
      */
     public void Onfocus() {
-        edit_date_activity.setVisibility(View.INVISIBLE);
+        edit_date_activity.setVisibility(View.GONE);
         date_view.setVisibility(View.VISIBLE);
         Button date_accept = (Button) findViewById(R.id.accept);
         date_accept.setOnClickListener(new View.OnClickListener() {
@@ -108,6 +110,20 @@ public class EditTask extends AppCompatActivity {
     public void OffFocus(){
         edit_date_activity.setVisibility(View.VISIBLE);
         date_view.setVisibility(View.GONE);
+    }
+    public String[] ConvertArrays(String[] intent_tasks, String task){
+        try {
+            String[] updated_task = new String[intent_tasks.length + 1];
+            for (int i = 0; i <= intent_tasks.length; i++) {
+                updated_task[i] = intent_tasks[i];
+            }
+            updated_task[intent_tasks.length + 1] = task;
+            return updated_task;
+        } catch (NullPointerException e) {
+            String[] updated_task = new String[1];
+            updated_task[0] = task;
+            return updated_task;
+        }
     }
 
 }
