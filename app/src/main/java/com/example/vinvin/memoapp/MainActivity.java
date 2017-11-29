@@ -88,8 +88,11 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == 1337) {
             if (data.getStringArrayExtra("Updated_tasks") != null) {
+                /*
+                This task should update database
+                */
                 String[] new_task = data.getStringArrayExtra("Updated_tasks");
-                ArrayList<String> up_tasks = new ArrayList<String>(Arrays.asList(new_task));
+                ArrayList<String> up_tasks = new ArrayList<>(Arrays.asList(new_task));
                 UpdateListview(up_tasks);
             }
         }

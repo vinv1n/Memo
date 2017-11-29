@@ -9,14 +9,19 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/exp_container"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:background="@color/edit_back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="30sp"
         >
 
         <TextView
             android:id="@+id/ex_priority"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/textColor"
+            android:layout_marginStart="10dp"
+            android:textStyle="bold"
             android:textSize="20sp"
             app:layout_constraintLeft_toLeftOf="parent"
             android:text="@string/Priority"
@@ -27,6 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/textColor"
             android:text="@string/Description"
             app:layout_constraintLeft_toLeftOf="@id/ex_priority"
             app:layout_constraintRight_toRightOf="parent"
@@ -36,6 +43,9 @@
         <TextView
             android:id="@+id/exp_date"
             android:layout_width="wrap_content"
+            android:textColor="@color/textColor"
+            android:layout_marginEnd="10sp"
+            android:textStyle="bold"
             android:layout_height="wrap_content"
             app:layout_constraintRight_toRightOf="parent"
             android:text="@string/Date"
@@ -43,13 +53,17 @@
             android:paddingBottom="10sp"
             />
     </android.support.constraint.ConstraintLayout>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/exp_container"
+        >
         <ListView
             android:id="@+id/new_task"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/exp_container"
+            android:layout_height="match_parent"
             >
         </ListView>
     </android.support.constraint.ConstraintLayout>
-
 </android.support.constraint.ConstraintLayout>
+
