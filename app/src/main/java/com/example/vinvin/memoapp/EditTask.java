@@ -54,9 +54,6 @@ public class EditTask extends AppCompatActivity {
     }
     private void GetTaskData(){
 
-        final String[] task_list = getIntent().getStringArrayListExtra("Tasks")
-                .toArray(getIntent().getStringArrayExtra("Tasks"));
-
         /*
 
         At this point listview should be upgraded that it will show dates and priority levels
@@ -75,9 +72,8 @@ public class EditTask extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String task = new_task.getText().toString();
-                String[] updated_tasks = ConvertArrays(task_list, task);
                 Intent intent_task = new Intent();
-                intent_task.putExtra("Updated_tasks", updated_tasks);
+                intent_task.putExtra("Updated_task", task);
                 setResult(RESULT_OK, intent_task);
                 finish();
             }
@@ -111,19 +107,4 @@ public class EditTask extends AppCompatActivity {
         edit_date_activity.setVisibility(View.VISIBLE);
         date_view.setVisibility(View.GONE);
     }
-    public String[] ConvertArrays(String[] intent_tasks, String task){
-        try {
-            String[] updated_task = new String[intent_tasks.length + 1];
-            for (int i = 0; i <= intent_tasks.length; i++) {
-                updated_task[i] = intent_tasks[i];
-            }
-            updated_task[intent_tasks.length + 1] = task;
-            return updated_task;
-        } catch (NullPointerException e) {
-            String[] updated_task = new String[1];
-            updated_task[0] = task;
-            return updated_task;
-        }
-    }
-
 }

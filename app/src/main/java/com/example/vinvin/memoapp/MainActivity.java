@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.vinvin.memoapp.database.DataBaseSource;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,11 +25,15 @@ public class MainActivity extends AppCompatActivity {
     private ListView listView;
     private ArrayAdapter adapter;
     private ArrayList<String> task_list;
+    private DataBaseSource source;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        source = new DataBaseSource(this);
+        source.open();
 
         SetupListview();
 
@@ -68,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     private void SetupListview() {
         task_list = new ArrayList<>();
         listView = (ListView) findViewById(R.id.new_task);
-        adapter = new ArrayAdapter(this, R.layout.activity_listview, task_list);
+        adapter = new ArrayAdapter(this, R.layout.activity_listview, source.getAllComments());
         listView.setAdapter(adapter);
     }
 
@@ -79,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void LaunchActivity() {
         Intent intent = new Intent(this, EditTask.class);
-        intent.putExtra("Tasks", task_list);
         startActivityForResult(intent, 1337);
     }
 
@@ -89,10 +94,9 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == 1337) {
             if (data.getStringArrayExtra("Updated_tasks") != null) {
                 Toast.makeText(this, "here", Toast.LENGTH_LONG).show();
-                String[] new_task = data.getStringArrayExtra("Updated_tasks");
-                List<String> up_tasks = new ArrayList<>(Arrays.asList(new_task));
-                Toast.makeText(getApplicationContext(), task_list.size(),
-                        Toast.LENGTH_LONG).show();
+                String new_task = data.getDataString();
+                source.createMemo(new_task, "1.1.1", "1");
+                SetupListview();
             }
         }
     }
